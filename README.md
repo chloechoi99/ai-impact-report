@@ -8,7 +8,7 @@ A portfolio showcase of 12 AI use cases built and deployed within the Planning &
 
 ## Overview
 
-All tools were built with zero prior coding or Power Platform experience, using AI (Claude, Microsoft Copilot) as the primary development method.
+All tools were built using AI (Claude, Microsoft Copilot) as the primary development method — delivering enterprise-grade outputs across Power Platform, HTML/JS, Node.js, and M365 integrations.
 
 | Metric | Result |
 |--------|--------|
