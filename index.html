@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Productivity Impact Report — P&A Management Office</title>
+<style>
+/* ───────────────────────────────────────────────
+   DESIGN TOKEN PALETTE
+─────────────────────────────────────────────── */
+:root {
+  --blue-1:      #0070F2;
+  --blue-2:      #0050B3;
+  --blue-dark:   #0A1628;
+  --blue-navy:   #1D2D3E;
+  --blue-mid:    #1873B4;
+  --blue-light:  #E8F2FD;
+  --blue-pale:   #F0F6FE;
+  --teal:        #0FAAFF;
+  --gold:        #F0AB00;
+  --gold-light:  #FFF8E1;
+  --green:       #188918;
+  --green-light: #E8F5E9;
+  --green-bright:#4DC66F;
+  --red:         #BB0000;
+  --orange:      #E65100;
+  --purple:      #4527A0;
+  --purple-light:#EDE7F6;
+  --bg:          #F0F4F9;
+  --surface:     #FFFFFF;
+  --border:      #D3E4F5;
+  --text:        #1D2D3E;
+  --muted:       #5B738B;
+  --shadow:      0 2px 16px rgba(0,112,242,0.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--surface);
+  box-shadow: 0 0 60px rgba(0,0,0,0.14);
+}
+
+/* ───────────────────────────────────────────────
+   HEADER
+─────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, #0A1628 0%, #0070F2 55%, #0FAAFF 100%);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -60px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 65%);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 20%;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(15,170,255,0.10) 0%, transparent 65%);
+}
+.header-inner {
+  position: relative; z-index: 2;
+  padding: 30px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo-block { display: flex; align-items: center; gap: 16px; }
+.portfolio-icon {
+  width: 52px; height: 52px;
+  flex-shrink: 0;
+}
+.header-title h1 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+.header-title p {
+  color: rgba(255,255,255,0.65);
+  font-size: 12px;
+  margin-top: 5px;
+}
+.header-right { display: flex; align-items: center; }
+.header-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 20px;
+  padding: 5px 16px;
+  color: rgba(255,255,255,0.92);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.header-hint {
+  color: rgba(255,255,255,0.38);
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+/* ───────────────────────────────────────────────
+   HERO KPI BAND
+─────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(to bottom, #0A1628, #0D2040);
+  display: flex;
+  border-bottom: 2px solid rgba(0,112,242,0.3);
+}
+.kpi {
+  flex: 1;
+  padding: 26px 14px;
+  text-align: center;
+  position: relative;
+}
+.kpi + .kpi::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; height: 60%;
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+}
+.kpi-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.kpi-num sup { font-size: 15px; vertical-align: super; font-weight: 600; }
+.kpi-num.gold  { color: var(--gold); }
+.kpi-num.teal  { color: var(--teal); }
+.kpi-num.green { color: var(--green-bright); }
+.kpi-label {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 8px;
+  font-weight: 700;
+}
+.kpi-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.30);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ───────────────────────────────────────────────
+   SECTION WRAPPER
+─────────────────────────────────────────────── */
+.section { padding: 34px 48px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.sec-icon {
+  width: 38px; height: 38px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; flex-shrink: 0;
+}
+.sec-icon.blue   { background: var(--blue-light); }
+.sec-icon.gold   { background: var(--gold-light); }
+.sec-icon.green  { background: var(--green-light); }
+.sec-icon.purple { background: var(--purple-light); }
+.sec-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue-dark);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+.sec-desc {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ───────────────────────────────────────────────
+   CARD GRIDS
+─────────────────────────────────────────────── */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-1), var(--teal));
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.tool-card:hover {
+  border-color: var(--blue-1);
+  box-shadow: 0 6px 24px rgba(0,112,242,0.15);
+  transform: translateY(-3px);
+}
+.tool-card:hover::after { opacity: 1; }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.card-icon { font-size: 22px; }
+.cbadge {
+  font-size: 9px; font-weight: 700;
+  padding: 3px 8px; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.cb-auto     { background: var(--green-light);   color: var(--green); }
+.cb-assisted { background: #FFF3E0;               color: var(--orange); }
+.cb-platform { background: var(--purple-light);   color: var(--purple); }
+.cb-agent    { background: var(--blue-light);     color: var(--blue-1); }
+.cb-planned  { background: #F5F5F5;               color: var(--muted); }
+
+.card-title {
+  font-size: 13px; font-weight: 700;
+  color: var(--text); line-height: 1.3;
+  margin-bottom: 5px;
+}
+.card-desc {
+  font-size: 11px; color: var(--muted);
+  line-height: 1.5; margin-bottom: 14px;
+}
+.card-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.chip {
+  background: var(--blue-light);
+  border-radius: 6px;
+  padding: 4px 9px;
+  display: flex; flex-direction: column;
+}
+.chip .cv {
+  font-size: 14px; font-weight: 800;
+  color: var(--blue-1); line-height: 1;
+}
+.chip .cl {
+  font-size: 9px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.4px;
+  margin-top: 2px;
+}
+.chip.grn { background: var(--green-light); }
+.chip.grn .cv { color: var(--green); }
+.chip.gld { background: var(--gold-light); }
+.chip.gld .cv { color: #B57800; }
+
+.card-hint {
+  position: absolute; bottom: 11px; right: 13px;
+  font-size: 9px; color: #B0C4D8;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+}
+
+/* ───────────────────────────────────────────────
+   DIVIDER
+─────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+/* ───────────────────────────────────────────────
+   ADOPTION TABLE
+─────────────────────────────────────────────── */
+.adopt-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.adopt-table thead tr { background: var(--blue-dark); color: #fff; }
+.adopt-table thead th {
+  padding: 12px 14px; text-align: left;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.adopt-table tbody tr { border-bottom: 1px solid var(--border); }
+.adopt-table tbody tr:nth-child(even) { background: #F7FAFD; }
+.adopt-table tbody tr:hover { background: var(--blue-pale); }
+.adopt-table td { padding: 11px 14px; vertical-align: top; line-height: 1.5; }
+.at-tool { font-weight: 700; color: var(--blue-2); }
+.at-sub { font-size: 10.5px; color: var(--muted); }
+.at-save { font-weight: 700; color: var(--green); white-space: nowrap; }
+.feedback-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 4px; }
+.feedback-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--blue-1);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+.feedback-quote {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.feedback-quote::before { content: '\201C'; color: var(--blue-1); font-size: 20px; font-style: normal; margin-right: 2px; }
+.feedback-quote::after  { content: '\201D'; color: var(--blue-1); font-size: 20px; font-style: normal; margin-left: 2px; }
+.feedback-author { font-size: 12px; font-weight: 700; color: var(--blue-dark); }
+.feedback-role   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ───────────────────────────────────────────────
+   MODAL
+─────────────────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,22,40,0.72);
+  z-index: 9000;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.overlay.open { display: flex; }
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 700px; width: 100%;
+  max-height: 86vh; overflow-y: auto;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.38);
+  animation: mIn .22s ease;
+}
+@keyframes mIn {
+  from { opacity:0; transform: scale(0.95) translateY(14px); }
+  to   { opacity:1; transform: scale(1)    translateY(0); }
+}
+
+.modal-hdr {
+  background: linear-gradient(135deg, #0A1628, #0070F2);
+  padding: 22px 26px;
+  border-radius: 12px 12px 0 0;
+  position: sticky; top: 0; z-index: 1;
+}
+.modal-hdr-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.modal-title  { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.modal-sub    { color: rgba(255,255,255,0.6); font-size: 11px; margin-top: 4px; }
+.modal-close {
+  background: rgba(255,255,255,0.15); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 6px;
+  cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-left: 12px;
+}
+.modal-close:hover { background: rgba(255,255,255,0.25); }
+
+.modal-body { padding: 22px 26px; }
+.m-kpis {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 10px; margin-bottom: 18px;
+}
+.m-kpi {
+  background: var(--blue-light);
+  border-radius: 8px; padding: 11px 12px; text-align: center;
+}
+.m-kpi .mv { font-size: 20px; font-weight: 800; color: var(--blue-1); line-height: 1; }
+.m-kpi .mv.grn { color: var(--green); }
+.m-kpi .mv.gld { color: #B57800; }
+.m-kpi .ml { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+
+.m-sec { margin-bottom: 16px; }
+.m-sec h4 {
+  font-size: 10px; font-weight: 700;
+  color: var(--blue-dark);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 8px; padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.m-desc {
+  font-size: 12px; color: var(--muted);
+  line-height: 1.6;
+  background: #F7FAFD;
+  border-left: 3px solid var(--blue-1);
+  border-radius: 0 6px 6px 0;
+  padding: 11px 13px;
+}
+.m-desc.gold { border-color: var(--gold); }
+
+.cmp-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.cmp-table th {
+  background: #F5F6FA; padding: 8px 10px;
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.4px;
+  color: var(--muted); font-weight: 700; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.cmp-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.4; }
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table .manual { color: var(--red); font-weight: 600; }
+.cmp-table .ai     { color: var(--blue-1); font-weight: 600; }
+.cmp-table .saving { color: var(--green); font-weight: 700; }
+
+/* ───────────────────────────────────────────────
+   CAPABILITY CALLOUT
+─────────────────────────────────────────────── */
+.callout {
+  background: linear-gradient(135deg, #0A1628, #0070F2);
+  border-radius: 8px;
+  margin: 0 48px 32px;
+  padding: 22px 28px;
+  display: flex; align-items: center; gap: 20px;
+}
+.callout-icon { font-size: 30px; flex-shrink: 0; }
+.callout h3 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.callout p  { color: rgba(255,255,255,0.65); font-size: 11.5px; line-height: 1.6; }
+
+/* ───────────────────────────────────────────────
+   FOOTER
+─────────────────────────────────────────────── */
+.footer {
+  background: var(--blue-dark);
+  padding: 15px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer p      { color: rgba(255,255,255,0.35); font-size: 10px; }
+.footer .auth  { color: rgba(255,255,255,0.72); font-size: 11px; font-weight: 600; }
+
+@media print {
+  .overlay { display: none !important; }
+  body { background: #fff; }
+  .page { box-shadow: none; }
+}
+
+/* ───────────────────────────────────────────────
+   INTRO ANIMATION OVERLAY
+─────────────────────────────────────────────── */
+#intro-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(145deg, #060d1a 0%, #0A1628 45%, #0e2540 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; cursor: pointer;
+}
+#intro-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.intro-content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+}
+.intro-logo-wrap {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  padding: 18px;
+  box-shadow: 0 0 40px rgba(0,112,242,0.6), 0 0 100px rgba(15,170,255,0.25), 0 8px 32px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: translateY(-28px) scale(0.75);
+  animation: introLogoIn 0.65s cubic-bezier(0.34,1.45,0.64,1) 0.3s forwards;
+}
+@keyframes introLogoIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.intro-divider {
+  width: 1px; height: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,112,242,0.7), transparent);
+  margin: 22px auto 0;
+  animation: introDivGrow 0.45s ease 0.85s forwards;
+}
+@keyframes introDivGrow { to { height: 44px; } }
+.intro-title {
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: 27px; font-weight: 700; letter-spacing: 0.2px;
+  min-height: 38px; margin-top: 20px;
+  opacity: 0; transform: translateY(8px);
+  animation: introFadeUp 0.4s ease 1.05s forwards;
+}
+.intro-cursor {
+  display: inline-block; width: 2px; height: 26px;
+  background: #0FAAFF; margin-left: 2px; vertical-align: middle;
+  animation: introBlink 0.75s step-end infinite;
+}
+@keyframes introBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+.intro-sub {
+  color: rgba(255,255,255,0.45); font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase; margin-top: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  opacity: 0; transform: translateY(8px);
+  animation: introFadeUp 0.4s ease 1.25s forwards;
+}
+@keyframes introFadeUp { to { opacity: 1; transform: translateY(0); } }
+.intro-stats {
+  display: flex; align-items: center; gap: 0;
+  margin-top: 38px;
+  opacity: 0; transform: translateY(10px);
+  animation: introFadeUp 0.5s ease 1.6s forwards;
+}
+.intro-stat { padding: 0 32px; text-align: center; }
+.intro-stat + .intro-stat {
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+.intro-stat-num {
+  font-size: 38px; font-weight: 800; color: #0FAAFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  letter-spacing: -1px; line-height: 1;
+}
+.intro-stat-num sup { font-size: 17px; font-weight: 700; vertical-align: super; }
+.intro-stat-label {
+  font-size: 10px; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+}
+.intro-cta {
+  margin-top: 46px; color: rgba(255,255,255,0.3);
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  opacity: 0;
+  animation: introFadeUp 0.4s ease 2.4s forwards, introPulse 2.2s ease 2.8s infinite;
+}
+@keyframes introPulse { 0%,100%{opacity:0.3} 50%{opacity:0.65} }
+
+/* Staggered page section entrance */
+.page > * { opacity: 0; transform: translateY(22px); }
+.page.revealed > * { animation: sectionReveal 0.55s ease forwards; }
+.page.revealed > *:nth-child(1)  { animation-delay: 0.04s; }
+.page.revealed > *:nth-child(2)  { animation-delay: 0.10s; }
+.page.revealed > *:nth-child(3)  { animation-delay: 0.16s; }
+.page.revealed > *:nth-child(4)  { animation-delay: 0.22s; }
+.page.revealed > *:nth-child(5)  { animation-delay: 0.28s; }
+.page.revealed > *:nth-child(6)  { animation-delay: 0.34s; }
+.page.revealed > *:nth-child(7)  { animation-delay: 0.40s; }
+.page.revealed > *:nth-child(8)  { animation-delay: 0.46s; }
+.page.revealed > *:nth-child(9)  { animation-delay: 0.52s; }
+.page.revealed > *:nth-child(10) { animation-delay: 0.58s; }
+.page.revealed > *:nth-child(11) { animation-delay: 0.64s; }
+.page.revealed > *:nth-child(12) { animation-delay: 0.70s; }
+.page.revealed > *:nth-child(13) { animation-delay: 0.76s; }
+.page.revealed > *:nth-child(14) { animation-delay: 0.82s; }
+@keyframes sectionReveal { to { opacity: 1; transform: translateY(0); } }
+
+/* ───────────────────────────────────────────────
+   DISCLOSURE BANNER
+─────────────────────────────────────────────── */
+.disclosure-banner {
+  background: linear-gradient(135deg, #0A1628, #0d3068);
+  border-bottom: 2px solid rgba(15,170,255,0.35);
+  padding: 26px 48px;
+}
+.disclosure-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.disclosure-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.disclosure-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0FAAFF;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  margin-bottom: 8px;
+}
+.disclosure-body {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+}
+.disclosure-body strong {
+  color: rgba(255,255,255,0.96);
+}
+
+/* ───────────────────────────────────────────────
+   ORG CONTEXT SECTION
+─────────────────────────────────────────────── */
+.org-context {
+  background: var(--blue-pale);
+  border-left: 4px solid var(--blue-1);
+  border-bottom: 1px solid var(--border);
+  padding: 22px 48px;
+}
+.org-context-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue-1);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 8px;
+}
+.org-context-text {
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.75;
+}
+.org-context-text strong {
+  color: var(--blue-dark);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ INTRO OVERLAY ═══ -->
+<div id="intro-overlay">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-content">
+    <div class="intro-logo-wrap">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M36 10L42 28L60 36L42 44L36 62L30 44L12 36L30 28Z" fill="white" opacity="0.85"/>
+        <circle cx="36" cy="36" r="5" fill="#0FAAFF"/>
+        <circle cx="36" cy="36" r="2.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="intro-divider"></div>
+    <div class="intro-title" id="intro-title"><span class="intro-cursor"></span></div>
+    <div class="intro-sub">Planning &amp; Analytics Management Office &nbsp;·&nbsp; Global Enterprise Technology Company &nbsp;·&nbsp; as of September 2026</div>
+    <div class="intro-stats">
+      <div class="intro-stat">
+        <div class="intro-stat-num" id="istat-hours">0<sup>+</sup></div>
+        <div class="intro-stat-label">Hours Saved / Year</div>
+      </div>
+      <div class="intro-stat">
+        <div class="intro-stat-num" id="istat-tools">0</div>
+        <div class="intro-stat-label">AI Tools Built</div>
+      </div>
+      <div class="intro-stat">
+        <div class="intro-stat-num" id="istat-pct">0<sup>%</sup></div>
+        <div class="intro-stat-label">Avg Efficiency Gain</div>
+      </div>
+    </div>
+    <div class="intro-cta">Click anywhere to explore</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══ DISCLOSURE BANNER ═══ -->
+<div class="disclosure-banner">
+  <div class="disclosure-inner">
+    <div class="disclosure-icon">🔐</div>
+    <div>
+      <div class="disclosure-title">Portfolio Version — Sanitised for Public Sharing</div>
+      <div class="disclosure-body">
+        This is a sanitised public version of an internal AI productivity impact report.
+        <strong>All identifying and confidential information</strong> — company name, team name, internal system names, and colleague names — <strong>has been removed or anonymised.</strong>
+        All 12 projects listed were <strong>directly contributed to and/or led by me.</strong>
+        Specific tool demos and live deployments remain confidential and cannot be shared publicly.
+        <strong>All numerical data</strong> (hours saved, efficiency gains, adoption metrics) <strong>reflects real, verified outcomes.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-block">
+      <svg class="portfolio-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="26" fill="rgba(255,255,255,0.10)"/>
+        <path d="M26 8L31 21L44 26L31 31L26 44L21 31L8 26L21 21Z" fill="white" opacity="0.88"/>
+        <circle cx="26" cy="26" r="4" fill="#0FAAFF"/>
+        <circle cx="26" cy="26" r="2" fill="white"/>
+      </svg>
+      <div class="header-title">
+        <h1>AI Productivity Impact Report</h1>
+        <p>Planning &amp; Analytics Management &amp; PMO Office &nbsp;·&nbsp; Global Enterprise Technology Company &nbsp;·&nbsp; as of September 2026</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div>
+        <div class="header-tag">Portfolio Version</div>
+        <div class="header-hint" style="text-align:right; margin-top:6px;">All confidential info removed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HERO KPI BAND ═══ -->
+<div class="hero">
+  <div class="kpi">
+    <div class="kpi-num gold">~800<sup>+</sup></div>
+    <div class="kpi-label">Hrs / Year Saved</div>
+    <div class="kpi-sub">Team-wide across all tools</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num teal">~91<sup>%</sup></div>
+    <div class="kpi-label">Avg Efficiency Gain</div>
+    <div class="kpi-sub">AI-enabled vs. manual workflow</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num">12</div>
+    <div class="kpi-label">Use Cases Built</div>
+    <div class="kpi-sub">Apps · Flows · Dashboards · Agents</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num green">4</div>
+    <div class="kpi-label">Teams Reached</div>
+    <div class="kpi-sub">Peer teams adopted tools built here</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num" style="color:#fff; font-size:18px; padding-top:9px; line-height:1.25;">Zero Coding<br>Experience</div>
+    <div class="kpi-label">Starting Point</div>
+    <div class="kpi-sub">All 12 tools built first-time</div>
+  </div>
+</div>
+
+<!-- ═══ ORG CONTEXT ═══ -->
+<div class="org-context">
+  <div class="org-context-label">Organisational Context</div>
+  <div class="org-context-text">
+    These tools were built and deployed within the <strong>Planning &amp; Analytics Management &amp; PMO Office</strong> of a major cloud product division at one of the world's largest enterprise software companies — <strong>Fortune 500, 100,000+ employees globally.</strong>
+    The function oversees strategic planning, portfolio management, and cross-functional coordination across the division, serving <strong>100+ stakeholders</strong> spanning project management, executive reporting, and communications workstreams.
+    The organisation spans <strong>multiple sub-departments with dedicated Chief of Staff offices</strong> — each responsible for their own planning and operations cycles.
+    All 12 tools in this report were <strong>designed, built, and maintained by one person</strong>, with no prior coding experience, and several were later <strong>independently adopted by peer departments across the broader function.</strong>
+  </div>
+</div>
+
+<!-- ═══ SECTION 1: AI AUTOMATIONS ═══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="sec-icon blue">⚡</div>
+    <div>
+      <div class="sec-label">AI-Enabled Automations &amp; Apps</div>
+      <div class="sec-desc">Flows, Power Apps, and web apps that automate recurring work — built with AI on Power Platform and SharePoint</div>
+    </div>
+  </div>
+  <div class="grid-3">
+
+    <!-- Action Items Reminder -->
+    <div class="tool-card" onclick="openModal('ai-reminder')">
+      <div class="card-top">
+        <span class="card-icon">📧</span>
+        <span class="cbadge cb-auto">Fully Automated</span>
+      </div>
+      <div class="card-title">Action Items Reminder — Automated Email Flow</div>
+      <div class="card-desc">One consolidated company-branded email per owner, runs automatically every 2 weeks. Zero human effort per cycle. Adopted by 3 peer departments.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~156h</span><span class="cl">Saved (Team) / Yr</span></div>
+        <div class="chip"><span class="cv">0 min</span><span class="cl">Ongoing Effort</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Headcount Management App -->
+    <div class="tool-card" onclick="openModal('headcount')">
+      <div class="card-top">
+        <span class="card-icon">👥</span>
+        <span class="cbadge cb-platform">Claude Built</span>
+      </div>
+      <div class="card-title">Headcount Management App</div>
+      <div class="card-desc">Clear visual overview of headcount requests and replacements — built with Claude AI, replacing a complex spreadsheet-based process. Saves ~1 hour per week.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~52h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~1h</span><span class="cl">Saved / Week</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- PM Deck Reminder -->
+    <div class="tool-card" onclick="openModal('pm-deck')">
+      <div class="card-top">
+        <span class="card-icon">🔔</span>
+        <span class="cbadge cb-auto">Fully Automated</span>
+      </div>
+      <div class="card-title">PM Deck Reminder — Teams &amp; Email</div>
+      <div class="card-desc">Weekly adaptive card to PMs with SharePoint writeback. Auto-stops once PM confirms update. Zero ongoing manual effort.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~52h</span><span class="cl">Annual Saving</span></div>
+        <div class="chip"><span class="cv">0 min</span><span class="cl">Ongoing Effort</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Action Item Tracking App -->
+    <div class="tool-card" onclick="openModal('ai-tracking')">
+      <div class="card-top">
+        <span class="card-icon">✅</span>
+        <span class="cbadge cb-platform">Power App</span>
+      </div>
+      <div class="card-title">Action Item Tracking App</div>
+      <div class="card-desc">Centralised canvas app for tracking all team action items — built with Claude AI, replacing manual SharePoint list navigation. Adopted by 2 peer departments.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~48h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~1h</span><span class="cl">Saved / Week</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- LinkedIn Post Assistant -->
+    <div class="tool-card" onclick="openModal('linkedin')">
+      <div class="card-top">
+        <span class="card-icon">💼</span>
+        <span class="cbadge cb-platform">Claude Built</span>
+      </div>
+      <div class="card-title">LinkedIn Post Assistant</div>
+      <div class="card-desc">End-to-end LinkedIn content management — compose, calendar, analytics dashboard, and SharePoint archive. Built in 3 weeks using Claude AI with zero prior coding experience.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~185h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~66 min</span><span class="cl">Saved / Post</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Newsletter System -->
+    <div class="tool-card" onclick="openModal('newsletter')">
+      <div class="card-top">
+        <span class="card-icon">📰</span>
+        <span class="cbadge cb-auto">Fully Automated</span>
+        <span class="cbadge cb-platform">Claude Built</span>
+      </div>
+      <div class="card-title">P&amp;A Newsletter System</div>
+      <div class="card-desc">Power App submission portal + Admin Web App for review, AI formatting, and publishing. 4 automated flows. ~70% efficiency gain per edition.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~196h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~49h</span><span class="cl">Saved / Edition</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ═══ SECTION 2: VIBE CODED DASHBOARDS ═══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="sec-icon gold">📊</div>
+    <div>
+      <div class="sec-label">Vibe Coded Dashboards</div>
+      <div class="sec-desc">Interactive HTML dashboards built entirely with AI — replacing static PowerPoint reporting. Updated monthly.</div>
+    </div>
+  </div>
+  <div class="grid-3">
+
+    <!-- Portfolio Dashboard -->
+    <div class="tool-card" onclick="openModal('portfolio')">
+      <div class="card-top">
+        <span class="card-icon">🗂️</span>
+        <span class="cbadge cb-platform">Dashboard · Monthly</span>
+      </div>
+      <div class="card-title">Portfolio Dashboard</div>
+      <div class="card-desc">Portfolio-wide project tracking — status, milestones, PM &amp; lead visibility across all projects. Updated monthly. Replaced static PowerPoint reporting cycle.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~50h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">5 min</span><span class="cl">Any Project Info</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Delivery Initiative Dashboard -->
+    <div class="tool-card" onclick="openModal('pdlc')">
+      <div class="card-top">
+        <span class="card-icon">🚀</span>
+        <span class="cbadge cb-platform">Dashboard · Monthly</span>
+      </div>
+      <div class="card-title">Delivery Initiative Dashboard</div>
+      <div class="card-desc">Dedicated initiative dashboard tracking deliverables and progress across teams. Updated monthly. Replaced multi-spreadsheet status aggregation.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~33h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~3h</span><span class="cl">Saved / Update</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Communications Pack -->
+    <div class="tool-card" onclick="openModal('comms')">
+      <div class="card-top">
+        <span class="card-icon">📨</span>
+        <span class="cbadge cb-assisted">AI-Assisted</span>
+      </div>
+      <div class="card-title">Communications Pack — PPT → Email Format</div>
+      <div class="card-desc">AI now generates a rich HTML email with all PPT content inline — no file needed, richer for recipients. Adopted as team standard for all distributions.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~56h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">~7h</span><span class="cl">Saved / Pack</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- Jira Reporter -->
+    <div class="tool-card" onclick="openModal('jira-tools')">
+      <div class="card-top">
+        <span class="card-icon">🔗</span>
+        <span class="cbadge cb-platform">Claude Built</span>
+      </div>
+      <div class="card-title">Jira Issue HTML Reporter</div>
+      <div class="card-desc">Generates a self-contained interactive HTML report for any Jira issue — linked issues grouped by relationship, 3-level drill-down, and AI-powered description &amp; activity summaries.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~10 min</span><span class="cl">Saved / Issue</span></div>
+        <div class="chip"><span class="cv">Instant</span><span class="cl">AI Summaries</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+  </div>
+</div>
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="sec-icon green">🛠️</div>
+    <div>
+      <div class="sec-label">Management Office Tools &amp; AI Agents</div>
+      <div class="sec-desc">Purpose-built internal tools and a custom AI agent powering the daily operations of the Management Office</div>
+    </div>
+  </div>
+  <div class="grid-2">
+
+    <!-- MOSAIC -->
+    <div class="tool-card" onclick="openModal('mosaic')">
+      <div class="card-top">
+        <span class="card-icon">🧩</span>
+        <span class="cbadge cb-platform">Always-On Platform</span>
+      </div>
+      <div class="card-title">MOSAIC — Management Office Actionable Smart Intelligence Console</div>
+      <div class="card-desc">A single centralised hub consolidating all useful links, tools, dashboards, and resources for daily management office work. Entirely AI-built, used every day.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~80h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">Daily</span><span class="cl">Active Usage</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+    <!-- COSMO -->
+    <div class="tool-card" onclick="openModal('cosmo')">
+      <div class="card-top">
+        <span class="card-icon">🤖</span>
+        <span class="cbadge cb-agent">AI Agent</span>
+      </div>
+      <div class="card-title">COSMO — Custom AI Agent (Copilot Agent Builder)</div>
+      <div class="card-desc">Custom agent built in Microsoft Copilot Agent Builder, connected to team knowledge sources. Summarises documents and answers any team question instantly. Shared team-wide.</div>
+      <div class="card-chips">
+        <div class="chip grn"><span class="cv">~50h</span><span class="cl">Saved / Year</span></div>
+        <div class="chip"><span class="cv">Instant</span><span class="cl">Q&amp;A</span></div>
+      </div>
+      <div class="card-hint">↗ Details</div>
+    </div>
+
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ═══ CALLOUT ═══ -->
+<div class="callout">
+  <div class="callout-icon">💡</div>
+  <div>
+    <h3>Beyond Time Savings — A Capability Multiplier</h3>
+    <p>Every tool in this report was built with zero prior coding or Power Platform experience. Without AI, these would not just have taken longer — several would have been entirely out of reach. AI did not merely accelerate the work; it enabled intermediate-to-advanced quality outputs in single sessions, compressing months of learning into hours of doing.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: CASCADED ADOPTION ═══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="sec-icon purple">🌐</div>
+    <div>
+      <div class="sec-label">Tools Cascaded to Other Teams</div>
+      <div class="sec-desc">Tools and approaches built here that were independently adopted by peer departments — amplifying the original impact beyond the individual</div>
+    </div>
+  </div>
+  <table class="adopt-table">
+    <thead>
+      <tr>
+        <th>Tool / Topic</th>
+        <th>Adopting Team(s)</th>
+        <th>How Adopted</th>
+        <th>Additional Annual Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="at-tool">Action Items Reminder Flow</div>
+          <div class="at-sub">Biweekly automated email to owners</div>
+        </td>
+        <td>3 peer departments within the function</td>
+        <td>Departments independently replicated the Power Automate flow for their own action item tracking cadence on the same SharePoint pattern</td>
+        <td><span class="at-save">+~117 hrs/year saved</span><br><span class="at-sub">3 departments × ~39 hrs/year each</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="at-tool">Action Item Tracking App</div>
+          <div class="at-sub">Canvas app for managing team action items</div>
+        </td>
+        <td>2 peer departments within the function</td>
+        <td>Two peer departments adopted the app for their own action item management, using the same SharePoint list as their data source</td>
+        <td><span class="at-save">+~96 hrs/year saved</span><br><span class="at-sub">2 departments × ~48 hrs/year each</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="at-tool">COSMO AI Agent</div>
+          <div class="at-sub">Copilot Q&amp;A over team knowledge sources</div>
+        </td>
+        <td>PMO team members across the broader function</td>
+        <td>COSMO access shared with the broader team — colleagues use it daily for document Q&amp;A and onboarding research in daily workflow</td>
+        <td><span class="at-save">~10 min saved per query</span><br><span class="at-sub">Replaces manual document search</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="divider"></div>
+
+<!-- ═══ FEEDBACK ═══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="sec-icon gold">💬</div>
+    <div>
+      <div class="sec-label">Team Feedback</div>
+      <div class="sec-desc">Unsolicited feedback received from colleagues on the Action Items Reminder automation</div>
+    </div>
+  </div>
+  <div class="feedback-grid">
+    <div class="feedback-card">
+      <div class="feedback-quote">I like this system</div>
+      <div class="feedback-author">Senior Colleague</div>
+      <div class="feedback-role">On the Action Items Reminder automation</div>
+    </div>
+    <div class="feedback-card">
+      <div class="feedback-quote">Thank you very much for the report - this actually helps me not to lose sight of AIs completely</div>
+      <div class="feedback-author">Director-level Stakeholder</div>
+      <div class="feedback-role">On the Action Items Reminder automation</div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <p>Portfolio version — all identifying and confidential information removed &nbsp;·&nbsp; Original prepared for internal review, Planning &amp; Analytics Management &amp; PMO Office &nbsp;·&nbsp; as of September 2026</p>
+</div>
+
+</div><!-- /page -->
+
+<!-- MODAL OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeOnBg(event)">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<script>
+const D = {
+  'ai-reminder': {
+    title:'Action Items Reminder — Automated Email Flow',
+    sub:'Power Automate · SharePoint · Outlook',
+    kpis:[['~156h','Team Annual Saving','grn'],['0 min','Ongoing Effort','gld'],['3 Depts','Cascaded Adoption','']],
+    desc:'A Power Automate flow that consolidates all open action items from SharePoint and sends one personalised, company-branded email per owner — automatically every two weeks. Zero manual effort once built. The flow uses SharePoint as the data source and was later adopted by 3 peer departments, multiplying the function-wide impact to ~156 hrs/year.',
+    cmp:[
+      ['Per run effort','~90 min / run','0 min (fully automated)','100% eliminated'],
+      ['Annual saving (own team)','~39 hrs/year','0 hrs/year','~39 hrs saved'],
+      ['Annual saving (×4 departments)','~156 hrs/year','0 hrs/year','~156 hrs saved'],
+      ['Initial build time','~9–15 hrs manual','~1 hr with AI','~90% faster']
+    ],
+    extra:'3 peer departments independently adopted this flow for their own action item tracking — each saving ~39 hrs/year on the same biweekly cadence. Total function-wide saving: ~156 hrs/year from this single flow.'
+  },
+  'headcount': {
+    title:'Headcount Management App',
+    sub:'Built with Claude AI · SharePoint',
+    kpis:[['~52h','Annual Saving','grn'],['~1h','Saved per Week',''],['Error-Free','Replaces Spreadsheet','']],
+    desc:'A structured web app providing a clear visual overview of all headcount requests and replacements — replacing a cumbersome spreadsheet-based process that was slow to navigate and error-prone. Built using Claude AI. ~1 hour per week is saved compared to the previous workflow.',
+    cmp:[
+      ['Weekly headcount review','~1 hr/week (spreadsheet nav + formatting)','~0 min/week (App view)','~1 hr/week saved'],
+      ['Annual saving','~52 hrs/year','~0 hrs/year','~52 hrs/year saved'],
+      ['Data accuracy','Prone to formula errors in spreadsheet','Structured, clean app view','Error risk eliminated'],
+      ['Initial build time','~3–4 weeks (manual)','~4 hours with AI','~95% faster']
+    ],
+    extra:'The app provides a much cleaner view of headcount data than the previous spreadsheet process, eliminating formula error risks and saving ~1 hour per week on headcount review workflows.'
+  },
+  'pm-deck': {
+    title:'PM Deck Reminder System — Teams & Email',
+    sub:'Power Automate · Microsoft Teams · SharePoint',
+    kpis:[['~52h','Annual Saving','grn'],['0 min','Ongoing Effort','gld'],['Adaptive Cards','Advanced Pattern','']],
+    desc:'A multi-channel reminder system sending weekly adaptive cards to PMs in Teams, with SharePoint writeback when a PM acknowledges their deck update. The flow auto-stops reminding once a PM confirms — no duplicate nudges. Currently live and in use.',
+    cmp:[
+      ['Weekly PM chasing','~1 hr / week manual','0 min (automated)','~52 hrs/year eliminated'],
+      ['Annual total','~52 hrs/year','0 hrs/year','~52 hrs/year saved'],
+      ['Initial build time','~17–28 hrs manual','~2 hrs with AI','~91% faster']
+    ],
+    extra:'Adaptive Cards with SharePoint writeback is an advanced Power Automate pattern. AI designed, tested, and validated it in one build session — delivering a production-quality automation that would have taken weeks to build from scratch.'
+  },
+  'ai-tracking': {
+    title:'Action Item Tracking App',
+    sub:'SharePoint · Built with Claude AI',
+    kpis:[['~48h','Annual Saving','grn'],['~1h','Saved/Week',''],['2 Depts','Also Adopted','']],
+    desc:'A dedicated canvas app for managing all team action items — owners, due dates, status, and priority — replacing manual SharePoint list navigation that was difficult for team members new to SharePoint. The entire UI was generated by Claude AI. Real-time SharePoint sync keeps data accessible across the team.',
+    cmp:[
+      ['Weekly action item management','~1 hr/week (manual SharePoint nav)','~0 min (App view)','~1 hr/week saved'],
+      ['Annual saving','~48 hrs/year','~0 hrs/year','~48 hrs/year saved'],
+      ['SharePoint integration','Weeks of research for non-developer','Configured with AI in hours','Months of ramp-up saved'],
+      ['Initial build time','~3–4 weeks manual','30 minutes with AI','~99% faster']
+    ],
+    extra:'The Action Item Tracking App and the Action Items Reminder Flow share the same SharePoint list — the app provides the management interface, while the flow ensures owners are reminded automatically. Two peer departments also adopted this app for their own action item management.'
+  },
+  'linkedin': {
+    title:'LinkedIn Post Assistant',
+    sub:'HTML / CSS / JavaScript · Microsoft Graph API · SharePoint · MSAL · Built with Claude AI',
+    kpis:[['~185h','Annual Saving','grn'],['~66 min','Saved per Post',''],['6 Views','Analytics Dashboard','']],
+    desc:'A full single-page web application covering the entire LinkedIn content lifecycle: AI-assisted draft generation via structured form, rich-text formatting toolbar with one-click copy (eliminating line-break issues), a 3-view content calendar (Month/Week/List), an analytics dashboard (XLSX drag-and-drop → auto charts across 6 data dimensions), and a SharePoint-backed post archive with full CRUD. Built in 3 weeks with zero prior coding experience.',
+    cmp:[
+      ['Per post: drafting + formatting','~100 min / post','~34 min / post','~66 min saved per post'],
+      ['Content tracking','~20 min/week (spreadsheet/memory)','~3 min/week (Calendar)','~17 min/week saved'],
+      ['Analytics per quarter','~4 hrs (manual spreadsheet)','~30 min (XLSX upload + auto-charts)','~3.5 hrs/quarter saved'],
+      ['Annual total','~218 hrs/year','~33 hrs/year','~185 hrs/year saved'],
+      ['Full build time','6–10 months (self-learning)','3 weeks with AI','~95% faster']
+    ],
+    extra:'Enterprise features — MSAL OAuth 2.0, Microsoft Graph API full CRUD, SheetJS XLSX parsing, Chart.js multi-series charts — all implemented via AI prompts without reading a single line of SDK documentation.'
+  },
+  'newsletter': {
+    title:'P&A Newsletter System',
+    sub:'Power Apps · HTML/JS Admin App · Power Automate (4 flows) · SharePoint · Built with Claude AI',
+    kpis:[['~196h','Annual Saving','grn'],['70%','Efficiency Gain','gld'],['~49h','Saved per Edition','']],
+    desc:'A two-component system covering the entire newsletter lifecycle: (1) a Power Apps submission portal replacing ~60 email submissions per edition with structured auto-stored SharePoint entries; (2) a custom HTML Admin App for unified review, AI-assisted formatting, banner design, and publication to both SharePoint and the internal communications platform. Four Power Automate flows automate all stakeholder communications.',
+    cmp:[
+      ['Per edition total effort','~70 hrs/edition','~21 hrs/edition','~49 hrs/edition saved'],
+      ['Content collection (60 submissions)','~4 hrs inbox management','0 (auto via Power App)','Fully eliminated'],
+      ['Article formatting (60 articles)','~8.5 hrs','~2.5 hrs (AI Format)','~6 hrs saved'],
+      ['Internal platform publishing','~2 days manual layout','~¾ day','~10 hrs/edition saved'],
+      ['Annual total (4 editions)','~280 hrs/year','~84 hrs/year','~196 hrs/year saved'],
+      ['Full build time','7–10 months (non-developer)','4 weeks with AI','~90% faster']
+    ],
+    extra:'4 Power Automate flows run automatically across the edition lifecycle: submission confirmation (60 per edition), approval workflow, real-time Teams alerts, and field-change notifications. Combined: ~38 hrs/year fully automated, zero manual coordination emails.'
+  },
+  'portfolio': {
+    title:'Portfolio Dashboard',
+    sub:'HTML / CSS / JavaScript · Vibe Coded with Claude AI · Updated Monthly',
+    kpis:[['~50h','Annual Saving','grn'],['~3h','Saved per Update',''],['5 min','Any Project Located','']],
+    desc:'An interactive portfolio-wide project tracking dashboard providing visibility across all projects — status, milestones, PM and lead details, and KPI summaries. Built entirely with AI. Updated monthly. Replaced a static monthly PowerPoint reporting cycle.',
+    cmp:[
+      ['Monthly update cycle','~4 hrs (spreadsheet + PPT authoring)','~30–45 min (update data + refresh)','~3+ hrs/month saved'],
+      ['Time to find specific project info','~1–2 days (stakeholder asks)','~5 min (dashboard filter)','Real impact at senior stakeholder level'],
+      ['Annual update effort','~48 hrs/year','~8 hrs/year','~40 hrs/year saved'],
+      ['Initial build time','~2–3 months (custom HTML/JS)','~30 min with AI','~99% faster for v1']
+    ],
+    extra:'If anyone asks for information about a specific project, the relevant details can be located within 5 minutes using the dashboard — while comparable teams typically take a day or two to locate the same information from their records. The dashboard pays for itself in a single inquiry.'
+  },
+  'pdlc': {
+    title:'Delivery Initiative Dashboard',
+    sub:'HTML / CSS / JavaScript · Vibe Coded with Claude AI · Updated Monthly',
+    kpis:[['~33h','Annual Saving','grn'],['~3h','Saved per Update',''],['Cross-Team','Single Source of Truth','']],
+    desc:'A dedicated reporting dashboard for a strategic cross-functional initiative — tracking deliverables, team progress, and milestone status across all participating teams. Built entirely with AI. Updated monthly. Replaced multi-spreadsheet status aggregation.',
+    cmp:[
+      ['Monthly update effort','~4 hrs (multiple spreadsheets)','~30–45 min (update + refresh)','~3+ hrs/month saved'],
+      ['Cross-team visibility','Multiple spreadsheets, manual aggregation','Single dashboard (updated monthly)','Aggregation overhead eliminated'],
+      ['Annual update effort (12 months)','~48 hrs/year','~8 hrs/year','~40 hrs/year saved'],
+      ['Initial build time','~6–8 weeks (non-developer)','~30 min with AI','~99% faster for v1']
+    ],
+    extra:'A process that would have required 6–8 weeks for a non-developer using conventional methods was completed in ~30 minutes with AI. The dashboard eliminated the need for a manual status collection round before every monthly update.'
+  },
+  'comms': {
+    title:'Communications Pack — PPT to Email Format',
+    sub:'HTML Email · AI-Generated Content · Power Automate',
+    kpis:[['~56h','Annual Saving','grn'],['~7h','Saved per Pack',''],['Team Standard','Adopted Team-Wide','']],
+    desc:'The team previously shared a PowerPoint link for each communications pack distribution. AI now generates a fully formatted HTML email replicating all pack content inline — richer, more accessible, no file attachment needed. Recipients see the complete pack without opening a file. Adopted as the team standard for all distributions.',
+    cmp:[
+      ['Per pack production time','~8 hrs (PPT authoring + review)','~1 hr (AI draft + review)','~7 hrs per pack saved'],
+      ['Distribution method','PPT file link (recipients open file)','Inline HTML email (no file)','Better accessibility & engagement'],
+      ['Annual total (8 distributions)','~64 hrs/year','~8 hrs/year','~56 hrs/year saved'],
+      ['Template build time','~2–3 weeks (manual design)','~4 hours with AI','~90% faster']
+    ],
+    extra:'Adopted team-wide as the standard distribution format — not just a personal productivity gain but a change in how the team communicates with its full stakeholder group.'
+  },
+  'jira-tools': {
+    title:'Jira Issue HTML Reporter',
+    sub:'Jira · Node.js · OAuth 2.0 · Claude AI · Built with Claude Code',
+    kpis:[['~10 min','Saved / Issue','grn'],['3 Levels','Issue Drill-Down',''],['Instant','AI Summaries','']],
+    desc:'A tool for engineering project managers that generates a self-contained interactive HTML report for any enterprise Jira issue — showing all linked issues grouped into 5 sections (blocks, depends on, subtasks, related, parent hierarchy) with expandable drill-down up to 3 levels deep. Includes AI-powered Description and Activity Summary buttons backed by an enterprise AI proxy. Authentication uses full OAuth 2.0 with encrypted token storage and silent auto-refresh. Built entirely with Claude Code.',
+    cmp:[
+      ['Per-issue link review','~5–10 min (navigate Jira, open each linked issue)','~1–2 min (run tool, read report)','~4–8 min per issue'],
+      ['Issue summarisation','~5–10 min (read description + scroll through comments)','~1–2 min (click Summarise + read)','~4–8 min per issue'],
+      ['Initial build time','Months (Node.js, OAuth, CORS, API self-learning)','32 hrs with Claude Code','~99% faster']
+    ],
+    extra:'Built with zero prior Node.js experience using Claude Code — a tool that would have taken months to reach the same quality through self-learning. AI tokens are only consumed when AI summaries are requested, not on every run.'
+  },
+  'mosaic': {
+    title:'MOSAIC — Management Office Actionable Smart Intelligence Console',
+    sub:'HTML / CSS / JavaScript · Fully AI-Built',
+    kpis:[['~80h','Annual Saving','grn'],['Daily','Active Usage',''],['Instant','Onboarding Hub','']],
+    desc:'MOSAIC is a centralised web app consolidating all useful links, tools, dashboards, and resources needed for daily Management Office work into one place. Built entirely with AI — no prior coding experience. Used every day as the single starting point for all recurring workflows, replacing scattered browser bookmarks and pinned Teams tabs. Also accelerates onboarding: new team members have immediate access to all tools and resources from day one.',
+    cmp:[
+      ['Daily link navigation','~20 min/day (browser search, bookmarks, Teams)','~2 min/day','~18 min/day saved'],
+      ['Annual navigation overhead','~87 hrs/year (220 days × ~24 min avg)','~7 hrs/year','~80 hrs/year saved'],
+      ['New joiner onboarding','Weeks finding tools and links','Immediate (MOSAIC as landing page)','Onboarding significantly accelerated'],
+      ['Initial build time','~4–6 weeks (non-developer)','~2 hours with AI','~95% faster']
+    ],
+    extra:'MOSAIC was built to solve a simple but persistent problem: too much time was spent each day navigating to the same tools, dashboards, and document libraries. A single always-available hub replaced scattered bookmarks and pinned tabs.'
+  },
+  'cosmo': {
+    title:'COSMO — Custom AI Agent (Copilot Agent Builder)',
+    sub:'Microsoft Copilot Agent Builder · M365 Knowledge Sources',
+    kpis:[['~50h','Annual Saving','grn'],['Instant','Q&A Response',''],['Team-Wide','Access Shared','']],
+    desc:'COSMO is a custom AI agent built using Microsoft Copilot Agent Builder — a no-code interface within Microsoft 365 Copilot. Connected to the team\'s SharePoint document sources and project files, it summarises documents and answers any team question instantly in natural language — replacing manual document search, reading, and cross-referencing. COSMO access has been shared with the broader PMO team for daily use.',
+    cmp:[
+      ['Per-query time','~30–60 min (manual search + read)','~2–5 min (ask COSMO)','~25–55 min per query saved'],
+      ['Weekly Q&A / summarisation','~2–3 hrs/week','~20 min/week','~1.5–2.5 hrs/week saved'],
+      ['Annual saving','~130 hrs/year','~17 hrs/year','~50 hrs/year (conservative)'],
+      ['Build time','Weeks + dev team (custom bot)','~1 hour (no code)','~99% faster']
+    ],
+    extra:'COSMO access has been shared with the broader PMO team — colleagues use it for document Q&A and onboarding research as part of their daily workflow. Configured entirely through Copilot Agent Builder with no code written.'
+  }
+};
+
+function openModal(k){
+  const d=D[k]; if(!d) return;
+  const rows=d.cmp.map(r=>`<tr><td>${r[0]}</td><td class="manual">${r[1]}</td><td class="ai">${r[2]}</td><td class="saving">${r[3]}</td></tr>`).join('');
+  const kpis=d.kpis.map(k=>`<div class="m-kpi"><div class="mv ${k[2]||''}">${k[0]}</div><div class="ml">${k[1]}</div></div>`).join('');
+  document.getElementById('modalBox').innerHTML=`
+    <div class="modal-hdr">
+      <div class="modal-hdr-row">
+        <div>
+          <div class="modal-title">${d.title}</div>
+          <div class="modal-sub">${d.sub}</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="m-kpis">${kpis}</div>
+      <div class="m-sec"><h4>What it does</h4><div class="m-desc">${d.desc}</div></div>
+      <div class="m-sec">
+        <h4>Time &amp; Efficiency Impact</h4>
+        <table class="cmp-table">
+          <thead><tr><th>Activity</th><th>Without AI</th><th>With AI</th><th>Saving</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      ${d.extra?`<div class="m-sec"><h4>Additional Impact</h4><div class="m-desc gold">${d.extra}</div></div>`:''}
+    </div>`;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeOnBg(e){ if(e.target===document.getElementById('overlay')) closeModal(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+// ── INTRO ANIMATION ──────────────────────────────────────────────
+(function(){
+  // Canvas particles
+  var canvas = document.getElementById('intro-canvas');
+  var ctx = canvas.getContext('2d');
+  var W, H, particles = [];
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for(var i=0;i<90;i++){
+    particles.push({
+      x: Math.random()*1920, y: Math.random()*1080,
+      vx: (Math.random()-0.5)*0.4, vy: -Math.random()*0.6-0.1,
+      r: Math.random()*2.2+0.4,
+      a: Math.random()*0.6+0.1,
+      color: Math.random()>0.6 ? '#0070F2' : Math.random()>0.5 ? '#0FAAFF' : '#ffffff'
+    });
+  }
+  var animId;
+  function drawParticles(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<particles.length;i++){
+      for(var j=i+1;j<particles.length;j++){
+        var dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle='rgba(0,112,242,'+((1-dist/120)*0.15)+')';
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(function(p){
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.globalAlpha=p.a; ctx.fill();
+      p.x+=p.vx; p.y+=p.vy;
+      p.a+=(Math.random()-0.5)*0.015;
+      p.a=Math.max(0.05,Math.min(0.75,p.a));
+      if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
+      if(p.x<-5)p.x=W+5;
+      if(p.x>W+5)p.x=-5;
+    });
+    ctx.globalAlpha=1;
+    animId=requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // Typewriter
+  var titleText='AI Productivity Impact Report';
+  var titleEl=document.getElementById('intro-title');
+  var cursor=titleEl.querySelector('.intro-cursor');
+  var ci=0;
+  setTimeout(function typeChar(){
+    if(ci<titleText.length){
+      titleEl.insertBefore(document.createTextNode(titleText[ci]),cursor);
+      ci++;
+      setTimeout(typeChar, ci<5?120:55);
+    } else {
+      setTimeout(function(){ cursor.style.opacity='0'; cursor.style.transition='opacity 0.3s'; },800);
+    }
+  },1050);
+
+  // KPI counters
+  function countUp(id,target,suffix,duration){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var start=performance.now();
+    function step(now){
+      var t=Math.min((now-start)/duration,1);
+      t=1-(1-t)*(1-t)*(1-t);
+      var val=Math.floor(t*target);
+      if(suffix==='+') el.innerHTML=val+'<sup>+</sup>';
+      else if(suffix==='%') el.innerHTML=val+'<sup>%</sup>';
+      else el.textContent=val;
+      if(t<1) requestAnimationFrame(step);
+      else {
+        if(suffix==='+') el.innerHTML=target+'<sup>+</sup>';
+        else if(suffix==='%') el.innerHTML=target+'<sup>%</sup>';
+        else el.textContent=target;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  setTimeout(function(){
+    countUp('istat-hours',800,'+',1400);
+    countUp('istat-tools',12,'',900);
+    countUp('istat-pct',91,'%',1100);
+  },1700);
+
+  // Exit: iris collapse
+  var overlay=document.getElementById('intro-overlay');
+  var page=document.querySelector('.page');
+  document.body.style.overflow='hidden';
+  var dismissed=false;
+  function safeDismiss(){
+    if(dismissed)return;
+    dismissed=true;
+    cancelAnimationFrame(animId);
+    overlay.style.transition='clip-path 0.8s cubic-bezier(0.77,0,0.175,1)';
+    overlay.style.clipPath='circle(0% at 50% 50%)';
+    setTimeout(function(){
+      overlay.style.display='none';
+      document.body.style.overflow='';
+      page.classList.add('revealed');
+    },820);
+  }
+  setTimeout(safeDismiss,4500);
+  overlay.addEventListener('click',safeDismiss);
+})();
+</script>
+</body>
+</html>
